@@ -33,6 +33,7 @@ export interface User {
   document: number;
   password: number;
   balance: number;
+  accountNumber: string;
   dateUpdated?: string;
 }
 export interface AuthUser {

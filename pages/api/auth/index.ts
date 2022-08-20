@@ -10,7 +10,7 @@ export default function authHandler(req: NextApiRequest, res: NextApiResponse) {
   const result = getByDocument(Number(document));
 
   if (result?.document === Number(document) && result?.password === Number(password)) {
-    res.status(200).json({
+    return res.status(200).json({
       status: ResultStatus.OK,
       data: {
         name: result.name,

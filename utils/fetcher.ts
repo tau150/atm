@@ -1,9 +1,4 @@
-type Method = "GET" | "PATCH" | "POST" | "DELETE" | "PUT";
-
-interface FetcherParams {
-  method?: Method | undefined;
-  body?: Record<string, any> | null;
-}
+import type { FetcherParams } from "./types";
 
 export default function fetcher<T>(url: string, { method, body }: FetcherParams = {}): Promise<T> {
   const requestOptions = {
