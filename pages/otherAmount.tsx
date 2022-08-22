@@ -8,7 +8,7 @@ import {
   Text,
   VStack,
   Button,
-  HStack,
+  Stack,
   Box,
   theme,
   useDisclosure,
@@ -69,19 +69,22 @@ const OtherAmount: NextPage = () => {
             Other Amount
           </Heading>
         </Center>
-        <HStack alignItems="stretch" mt={8}>
-          <VStack justifyContent="space-between" w="50%">
-            <Text fontSize={32} fontWeight={theme.fontWeights.bold}>
+        <Stack alignItems={["center", "stretch"]} direction={["column", "row"]} mt={8}>
+          <Text display={["block", "none"]} fontSize={32} fontWeight={theme.fontWeights.bold}>
+            {currencyFormatter(Number(padState))}
+          </Text>
+          <VStack justifyContent="space-between" order={["1", "0"]} w="50%">
+            <Text display={["none", "block"]} fontSize={32} fontWeight={theme.fontWeights.bold}>
               {currencyFormatter(Number(padState))}
             </Text>
-            <Button colorScheme="orange" px={20} py={8} onClick={() => router.push(Routes.EXTRACT)}>
+            <Button colorScheme="gray" px={20} py={8} onClick={() => router.push(Routes.EXTRACT)}>
               Cancel
             </Button>
           </VStack>
-          <Center w="50%">
+          <Center order={["0", "1"]} w="50%">
             <Pad enterButtonDisabled={false} onClickPadButton={onClickPadButton} />
           </Center>
-        </HStack>
+        </Stack>
       </main>
       <InsufficientFoundsModal isOpen={isOpen} onClose={onClose} />
     </Box>

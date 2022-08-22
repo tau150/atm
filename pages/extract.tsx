@@ -1,21 +1,23 @@
 import type { NextPage } from "next";
-import type { RadioValue } from "types/pages/extract";
+import type { RadioValue } from "types/pages";
 
 import {
   Heading,
   VStack,
   Button,
+  Stack,
   HStack,
   Box,
   Radio,
   RadioGroup,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
+import { RadioValuesEnum } from "types/pages";
 import InsufficientFoundsModal from "components/InsufficientFoundsModal";
-import { RadioValuesEnum } from "types/pages/extract";
 import { Routes } from "types";
 import { useExtractMutation } from "hooks/useExtractMutation";
 import { useActionTimeout } from "hooks/useActionTimeout";
@@ -48,7 +50,7 @@ const Extract: NextPage = () => {
 
   return (
     <>
-      <Box height="100vh">
+      <Box>
         <Heading as="h4" m="6" textAlign="center">
           Extraction
         </Heading>
@@ -61,23 +63,65 @@ const Extract: NextPage = () => {
           value={radioValue}
           onChange={handleChangeValue}
         >
-          <VStack alignItems="flex-start" border={"1px"} m="4" p="6" width="20%">
-            <Radio value={RadioValuesEnum.FiveHundred}>500</Radio>
-            <Radio value={RadioValuesEnum.TwoThousand}>2000</Radio>
-            <Radio value={RadioValuesEnum.ThreeThousand}>3000</Radio>
-          </VStack>
-          <VStack alignItems="flex-start" border={"1px"} m="4" p="6" width="20%">
-            <Radio value={RadioValuesEnum.FiveThousand}>5000</Radio>
-            <Radio value={RadioValuesEnum.SixThousand}>6000</Radio>
-            <Radio value={RadioValuesEnum.Other}>Other</Radio>
-          </VStack>
+          <Stack direction={["column", "row"]} w="60%">
+            <VStack
+              alignItems="flex-start"
+              border={"1px"}
+              borderColor="whiteAlpha.700"
+              borderRadius={12}
+              m={["0", "4"]}
+              p="6"
+              w={["100%", "20%"]}
+            >
+              <Radio colorScheme="gray" value={RadioValuesEnum.FiveHundred}>
+                <Text as="span" color="white" fontWeight="bold">
+                  500
+                </Text>
+              </Radio>
+              <Radio colorScheme="gray" value={RadioValuesEnum.TwoThousand}>
+                <Text as="span" color="white" fontWeight="bold">
+                  2000
+                </Text>
+              </Radio>
+              <Radio colorScheme="gray" value={RadioValuesEnum.ThreeThousand}>
+                <Text as="span" color="white" fontWeight="bold">
+                  3000
+                </Text>
+              </Radio>
+            </VStack>
+            <VStack
+              alignItems="flex-start"
+              border={"1px"}
+              borderColor="whiteAlpha.700"
+              borderRadius={12}
+              m={["0", "4"]}
+              p="6"
+              w={["100%", "20%"]}
+            >
+              <Radio colorScheme="gray" value={RadioValuesEnum.FiveThousand}>
+                <Text as="span" color="white" fontWeight="bold">
+                  5000
+                </Text>
+              </Radio>
+              <Radio colorScheme="gray" value={RadioValuesEnum.SixThousand}>
+                <Text as="span" color="white" fontWeight="bold">
+                  6000
+                </Text>
+              </Radio>
+              <Radio colorScheme="gray" value={RadioValuesEnum.Other}>
+                <Text as="span" color="white" fontWeight="bold">
+                  Other
+                </Text>
+              </Radio>
+            </VStack>
+          </Stack>
         </RadioGroup>
         <HStack bottom="10%" justifyContent="space-around" mt="10%" width="100%">
-          <Button colorScheme="orange" size="lg" onClick={() => router.push(Routes.HOME)}>
+          <Button colorScheme="gray" size="lg" onClick={() => router.push(Routes.HOME)}>
             Cancel
           </Button>
           <Button
-            colorScheme="orange"
+            colorScheme="gray"
             disabled={radioValue === "" || radioValue === RadioValuesEnum.Other}
             size="lg"
             onClick={handleContinue}

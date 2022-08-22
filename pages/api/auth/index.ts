@@ -23,7 +23,7 @@ export default function authHandler(req: NextApiRequest, res: NextApiResponse) {
   } else {
     return res.status(401).json({
       status: ResultStatus.WRONG_CREDENTIALS,
-      data: { message: "Your document or password are incorrect" },
+      data: { message: "Your document is password are incorrect" },
     });
   }
 }

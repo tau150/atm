@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 
 import Head from "next/head";
-import { Heading, Center, Stack, Box, Button, Flex, VStack, Text } from "@chakra-ui/react";
-import { CheckIcon } from "@chakra-ui/icons";
+import { Heading, Center, Stack, Box, Button, Flex, VStack, Text, HStack } from "@chakra-ui/react";
+import { CheckIcon, WarningIcon } from "@chakra-ui/icons";
 import { useState, useCallback } from "react";
 import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
@@ -15,6 +15,7 @@ import { login } from "services/auth";
 import Pad from "components/Pad/Pad";
 import PadDetail from "components/PadDetail/PadDetail";
 import { ButtonActions } from "types/pages";
+import Loading from "components/UI/Loading";
 
 import styles from "../styles/Home.module.css";
 
@@ -37,8 +38,8 @@ const Auth: NextPage = () => {
   const toast = useToast();
   const auth = useAuthUser();
 
-  const { mutate } = useMutation(login, {
-    onSuccess: async (res) => {
+  const { mutate, isLoading } = useMutation(login, {
+    onSuccess: (res) => {
       auth?.login(res.data);
       setError(null);
       setLoginData({ password: null, document: null });
@@ -46,7 +47,7 @@ const Auth: NextPage = () => {
     },
     onError: (error: ErrorResponse) => {
       if (error.status === ResultStatus.WRONG_CREDENTIALS) {
-        setError("Your document or password are incorrect");
+        setError("Your document or password is incorrect");
 
         return;
       }
@@ -62,6 +63,7 @@ const Auth: NextPage = () => {
   });
 
   const handleClickSelection = (state: LoginStep): void => {
+    setPadState("");
     setSelectedOption(state);
     setError(null);
   };
@@ -120,6 +122,7 @@ const Auth: NextPage = () => {
   };
 
   useNumericPadKeyboard(handlePadButtonClick);
+  if (isLoading) return <Loading />;
 
   return (
     <div className={styles.container}>
@@ -131,45 +134,54 @@ const Auth: NextPage = () => {
 
       <main>
         <Center>
-          <Heading as="h1" m="6">
+          <Heading as="h1" mb={["0", "6"]} mt={6} textAlign="center">
             Welcome to Next Banking
           </Heading>
         </Center>
-        <Box mt={8}>
-          <Stack direction="row" h={200} mt={2} spacing={8}>
-            <Flex align="center" direction={"column"} h={200} justify="center" w="50%">
-              <Text align="center" fontSize="2xl" m="6">
-                Enter Document and Password
-              </Text>
+        <Box mt={[4, 8]}>
+          <Stack direction={["column", "row"]} h={200} mt={2} spacing={8}>
+            <Flex align="center" direction="column" h={200} justify="center" w={["100%", "50%"]}>
               <Button
-                colorScheme="teal"
+                colorScheme="gray"
                 mb="4"
                 rightIcon={selectedOption === LoginStep.Password ? <CheckIcon /> : undefined}
-                variant="outline"
-                w="20%"
+                w={["80%", "20%"]}
                 onClick={() => handleClickSelection(LoginStep.Document)}
               >
                 Document
               </Button>
               <Button
-                colorScheme="teal"
+                colorScheme="gray"
                 disabled={selectedOption === LoginStep.Document}
-                mb="4"
-                variant="outline"
-                w="20%"
+                mb={[0, 4]}
+                w={["80%", "20%"]}
                 onClick={() => handleClickSelection(LoginStep.Password)}
               >
                 Password
               </Button>
             </Flex>
-            <VStack m="4" w="50%">
-              <Text fontWeight="bold">Please write your {selectedOption}</Text>
-              <Pad
-                enterButtonDisabled={isEnterButtonDisabled()}
-                onClickPadButton={handlePadButtonClick}
-              />
-              <PadDetail content={padState} maskContent={selectedOption === LoginStep.Password} />
-              {error && <Text color="red.400">{error}</Text>}
+            <VStack p={[0, 4]} w={["100%", "50%"]}>
+              <Box>
+                <Center mb={[2, 5]} mt={[0, 5]}>
+                  <Text fontWeight="bold">Please write your {selectedOption}</Text>
+                </Center>
+                <Pad
+                  enterButtonDisabled={isEnterButtonDisabled()}
+                  onClickPadButton={handlePadButtonClick}
+                />
+                <Box mt={[2, 5]} pb={[12, 0]}>
+                  <PadDetail
+                    content={padState}
+                    maskContent={selectedOption === LoginStep.Password}
+                  />
+                </Box>
+                {error && (
+                  <HStack alignItems="center" mt={6} position="absolute">
+                    <WarningIcon color="whiteAlpha.900" />
+                    <Text color="whiteAlpha.900">{error}</Text>
+                  </HStack>
+                )}
+              </Box>
             </VStack>
           </Stack>
         </Box>

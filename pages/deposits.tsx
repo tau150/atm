@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
-import type { InputsState, InputKey } from "types/pages/deposit";
+import type { InputsState, InputKey } from "types/pages";
 
 import { useMutation } from "@tanstack/react-query";
-import { useToast } from "@chakra-ui/react";
+import { useToast, Center } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { Heading, Text, Stack, Box, Input, Button } from "@chakra-ui/react";
 import { useState } from "react";
@@ -95,12 +95,19 @@ const Deposits: NextPage = () => {
 
   return (
     <>
-      <Box height="100vh">
+      <Box>
         <Heading as="h4" m={12} textAlign="center">
           Deposits
         </Heading>
-        <Stack direction="row">
-          <Stack alignItems="center" direction="row" justifyContent="center" spacing={12} w="50%">
+        <Stack direction={["column", "row"]}>
+          <Stack
+            alignItems={["center"]}
+            direction="row"
+            justifyContent="center"
+            mt={[0, 12]}
+            spacing={12}
+            w={["100%", "50%"]}
+          >
             <Stack fontSize={20}>
               <Text fontWeight="bold" h="40px">
                 Dollar
@@ -123,6 +130,8 @@ const Deposits: NextPage = () => {
                 Amount
               </Text>
               <Input
+                color="whiteAlpha.900"
+                fontWeight="bold"
                 htmlSize={4}
                 m={8}
                 value={inputsValues["100"]}
@@ -131,15 +140,18 @@ const Deposits: NextPage = () => {
               />
               <Input
                 alignItems="center"
+                color="whiteAlpha.900"
                 display="flex"
+                fontWeight="bold"
                 htmlSize={4}
                 value={inputsValues["200"]}
                 width="auto"
                 onFocus={() => handleOnFocus("200")}
               />
               <Input
-                alignItems="center"
+                color="whiteAlpha.900"
                 display="flex"
+                fontWeight="bold"
                 htmlSize={4}
                 value={inputsValues["500"]}
                 width="auto"
@@ -147,7 +159,9 @@ const Deposits: NextPage = () => {
               />
               <Input
                 alignItems="center"
+                color="whiteAlpha.900"
                 display="flex"
+                fontWeight="bold"
                 htmlSize={4}
                 value={inputsValues["1000"]}
                 width="auto"
@@ -155,8 +169,8 @@ const Deposits: NextPage = () => {
               />
             </Stack>
           </Stack>
-          <Stack alignItems="center" justifyContent="center" w="50%">
-            <Stack alignItems="center">
+          <Stack alignItems="center" justifyContent="center" w={["100%", "50%"]}>
+            <Stack alignItems="center" mt={[6, 0]}>
               <Text fontSize={20}>Amount of deposit</Text>
               <Text fontSize={30} fontWeight="bold">
                 {currencyFormatter(total)}
@@ -165,15 +179,17 @@ const Deposits: NextPage = () => {
             <Pad enterButtonDisabled={total === 0} onClickPadButton={handleClickButton} />
           </Stack>
         </Stack>
-        <Button
-          colorScheme="orange"
-          ml="20%"
-          px={20}
-          py={8}
-          onClick={() => router.push(Routes.HOME)}
-        >
-          Cancel
-        </Button>
+        <Center>
+          <Button
+            colorScheme="gray"
+            mt={[4, 20]}
+            px={20}
+            py={8}
+            onClick={() => router.push(Routes.HOME)}
+          >
+            Cancel
+          </Button>
+        </Center>
       </Box>
     </>
   );

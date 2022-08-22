@@ -5,8 +5,8 @@ const Loading: React.FC<{}> = () => {
     <VStack alignItems="center" display="flex" height="100vh" justifyContent="center">
       <Heading mb="2rem">Loading...</Heading>
       <Spinner
-        color="orange.500"
-        emptyColor="red.200"
+        color="white.500"
+        emptyColor="blue.200"
         mt="2rem"
         size="xl"
         speed="0.65s"

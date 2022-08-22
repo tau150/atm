@@ -15,10 +15,12 @@ const Success: NextPage = () => {
 
   return (
     <>
-      <VStack height="100vh" justifyContent="center">
-        <Heading as="h5" mb="100px" textAlign="center" w="40%">
+      <VStack justifyContent="center">
+        <Heading as="h5" mb="100px" mt="10%" textAlign="center" w={["80%", "40%"]}>
           Your {router.query.operation} of amount {currencyFormatter(amount)} in the account number:{" "}
-          <Text color="orange.500">{auth?.authUser.accountNumber}</Text>
+          <Text color="blackAlpha.800" mt={4}>
+            {auth?.authUser.accountNumber}
+          </Text>
           <Text mt="2%">Was successfully completed</Text>
         </Heading>
         <Box>
