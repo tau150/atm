@@ -42,13 +42,11 @@ const Auth: NextPage = () => {
     onSuccess: (res) => {
       auth?.login(res.data);
       setError(null);
-      setLoginData({ password: null, document: null });
       router.push(Routes.HOME);
     },
     onError: (error: ErrorResponse) => {
       if (error.status === ResultStatus.WRONG_CREDENTIALS) {
         setError("Your document or password is incorrect");
-
         return;
       }
       toast({
