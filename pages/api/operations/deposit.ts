@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { ResultStatus } from "types";
 import { getBalance, update } from "helpers/users-repo";
 
-export default function operationHandler(req: NextApiRequest, res: NextApiResponse) {
+export default function depositHandler(req: NextApiRequest, res: NextApiResponse) {
   const { body } = req;
   const { document, amount } = body;
 

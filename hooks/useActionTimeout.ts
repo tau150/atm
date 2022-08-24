@@ -2,7 +2,7 @@ import { useEffect, useCallback, useRef } from "react";
 
 export const useActionTimeout = (
   action: Function = () => {},
-  delay: number = 300000,
+  delay: number = 30000,
 ): { resetTimeout: Function } => {
   const timerRef = useRef<undefined | number>(undefined);
 
