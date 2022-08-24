@@ -3,9 +3,17 @@ import { screen } from "@testing-library/dom";
 import React from "react";
 
 import { render } from "test-helpers/index";
-import { Routes } from "types";
 
 import AuthContext, { AuthProvider, useAuthUser } from "./AuthContext";
+
+const mockedPush = jest.fn();
+
+jest.mock("next/router", () => ({
+  ...jest.requireActual("next/router"),
+  useRouter: jest.fn().mockImplementation(() => ({
+    push: mockedPush,
+  })),
+}));
 
 beforeEach(() => {
   jest.spyOn(console, "error").mockImplementation(() => {});
@@ -116,5 +124,6 @@ describe("useAuthUser hook", () => {
 
     await user.click(logout);
     expect(screen.getByText(/not authenticated/i)).toBeInTheDocument();
+    expect(mockedPush).toHaveBeenCalledWith("/");
   });
 });

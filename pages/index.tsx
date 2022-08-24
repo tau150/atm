@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { Heading, Center, Stack, Box, Button, Flex, VStack, Text, HStack } from "@chakra-ui/react";
 import { CheckIcon, WarningIcon } from "@chakra-ui/icons";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@chakra-ui/react";
@@ -28,7 +28,7 @@ const maxLength = {
 const Auth: NextPage = () => {
   const [selectedOption, setSelectedOption] = useState<LoginStep>(LoginStep.Document);
   const [padState, setPadState] = useState<string>("");
-
+  const [isWaiting, setIsWaiting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [loginData, setLoginData] = useState<LoginUserState>({
     password: null,
@@ -37,6 +37,7 @@ const Auth: NextPage = () => {
   const router = useRouter();
   const toast = useToast();
   const auth = useAuthUser();
+  const documentButtonRef = useRef<HTMLButtonElement>(null);
 
   const { mutate, isLoading } = useMutation(login, {
     onSuccess: (res) => {
@@ -47,6 +48,8 @@ const Auth: NextPage = () => {
     onError: (error: ErrorResponse) => {
       if (error.status === ResultStatus.WRONG_CREDENTIALS) {
         setError("Your document or password is incorrect");
+        setIsWaiting(false);
+
         return;
       }
       toast({
@@ -56,6 +59,7 @@ const Auth: NextPage = () => {
         duration: 9000,
         isClosable: true,
       });
+      setIsWaiting(false);
       setError(null);
     },
   });
@@ -64,13 +68,14 @@ const Auth: NextPage = () => {
     setPadState("");
     setSelectedOption(state);
     setError(null);
+
+    documentButtonRef?.current?.blur();
   };
 
-  const onClickContinue = useCallback((): void => {
+  const onClickEnter = useCallback((): void => {
     if (selectedOption === LoginStep.Document) {
       setLoginData({ ...loginData, document: padState });
-      setSelectedOption(LoginStep.Password);
-      setPadState("");
+      handleClickSelection(LoginStep.Password);
 
       return;
     }
@@ -79,6 +84,7 @@ const Auth: NextPage = () => {
 
       newValues.password = padState;
       setSelectedOption(LoginStep.Password);
+      setIsWaiting(true);
       mutate(newValues);
     }
 
@@ -93,7 +99,7 @@ const Auth: NextPage = () => {
         return;
       }
       if (value === ButtonActions.Enter) {
-        onClickContinue();
+        onClickEnter();
 
         return;
       }
@@ -104,7 +110,7 @@ const Auth: NextPage = () => {
           : prevState,
       );
     },
-    [selectedOption, onClickContinue],
+    [selectedOption, onClickEnter],
   );
 
   const isEnterButtonDisabled = (): boolean => {
@@ -121,7 +127,7 @@ const Auth: NextPage = () => {
 
   useNumericPadKeyboard(handlePadButtonClick);
 
-  if (isLoading) return <Loading />;
+  if (isLoading || isWaiting) return <Loading />;
 
   return (
     <div className={styles.container}>
@@ -141,6 +147,7 @@ const Auth: NextPage = () => {
           <Stack direction={["column", "row"]} h={200} mt={2} spacing={8}>
             <Flex align="center" direction="column" h={200} justify="center" w={["100%", "50%"]}>
               <Button
+                ref={documentButtonRef}
                 colorScheme="gray"
                 mb="4"
                 rightIcon={selectedOption === LoginStep.Password ? <CheckIcon /> : undefined}
