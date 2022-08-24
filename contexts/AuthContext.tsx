@@ -1,10 +1,12 @@
 import type { AuthUser } from "types";
 import type { AuthContextProps, AuthContextInterface } from "./types";
 
+import { useRouter } from "next/router";
 import React, { createContext, useState, useContext } from "react";
 const AuthContext = createContext<AuthContextInterface | null>(null);
 
 export const AuthProvider: React.FC<AuthContextProps> = ({ children }: AuthContextProps) => {
+  const router = useRouter();
   const [authUser, setAuthUser] = useState<AuthUser>({
     document: null,
     id: null,
@@ -25,6 +27,7 @@ export const AuthProvider: React.FC<AuthContextProps> = ({ children }: AuthConte
       isAuthenticated: false,
       name: null,
     });
+    router.push("/");
   };
 
   return (

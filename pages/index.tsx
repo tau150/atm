@@ -122,6 +122,7 @@ const Auth: NextPage = () => {
   };
 
   useNumericPadKeyboard(handlePadButtonClick);
+
   if (isLoading) return <Loading />;
 
   return (

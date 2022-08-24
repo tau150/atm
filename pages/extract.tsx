@@ -63,15 +63,14 @@ const Extract: NextPage = () => {
           value={radioValue}
           onChange={handleChangeValue}
         >
-          <Stack direction={["column", "row"]} w="60%">
+          <Stack direction={["column", "row"]} justifyContent="center" mt={[0, 8]} w="60%">
             <VStack
               alignItems="flex-start"
               border={"1px"}
               borderColor="whiteAlpha.700"
               borderRadius={12}
-              m={["0", "4"]}
               p="6"
-              w={["100%", "20%"]}
+              w={["100%", "40%"]}
             >
               <Radio colorScheme="gray" value={RadioValuesEnum.FiveHundred}>
                 <Text as="span" color="white" fontWeight="bold">
@@ -94,9 +93,8 @@ const Extract: NextPage = () => {
               border={"1px"}
               borderColor="whiteAlpha.700"
               borderRadius={12}
-              m={["0", "4"]}
               p="6"
-              w={["100%", "20%"]}
+              w={["100%", "40%"]}
             >
               <Radio colorScheme="gray" value={RadioValuesEnum.FiveThousand}>
                 <Text as="span" color="white" fontWeight="bold">

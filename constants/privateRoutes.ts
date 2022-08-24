@@ -1,1 +1,1 @@
-export const privateRoutes = ["/balance", "/extract", "/deposit", "/otherAmount", "/home"];
+export const privateRoutes = ["/balance", "/extract", "/deposits", "/otherAmount", "/home"];

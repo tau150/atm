@@ -10,6 +10,7 @@ import { useState } from "react";
 import Pad from "components/Pad/Pad";
 import { currencyFormatter } from "utils/currencyFormatter";
 import { useActionTimeout } from "hooks/useActionTimeout";
+import { useNumericPadKeyboard } from "hooks/useNumericPadKeyboard";
 import { useAuthUser } from "contexts/AuthContext";
 import { Routes, DeleteActions } from "types";
 import { deposit } from "services/operations";
@@ -91,6 +92,8 @@ const Deposits: NextPage = () => {
     setInputsValues({ ...inputsValues, [inputOnFocus]: valueToAdd });
   };
 
+  useNumericPadKeyboard(handleClickButton);
+
   const total = getTotal();
 
   return (
@@ -131,6 +134,7 @@ const Deposits: NextPage = () => {
               </Text>
               <Input
                 color="whiteAlpha.900"
+                data-testid="input-100"
                 fontWeight="bold"
                 htmlSize={4}
                 m={8}
@@ -141,6 +145,7 @@ const Deposits: NextPage = () => {
               <Input
                 alignItems="center"
                 color="whiteAlpha.900"
+                data-testid="input-200"
                 display="flex"
                 fontWeight="bold"
                 htmlSize={4}
@@ -150,6 +155,7 @@ const Deposits: NextPage = () => {
               />
               <Input
                 color="whiteAlpha.900"
+                data-testid="input-500"
                 display="flex"
                 fontWeight="bold"
                 htmlSize={4}
@@ -160,6 +166,7 @@ const Deposits: NextPage = () => {
               <Input
                 alignItems="center"
                 color="whiteAlpha.900"
+                data-testid="input-1000"
                 display="flex"
                 fontWeight="bold"
                 htmlSize={4}

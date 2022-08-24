@@ -34,20 +34,22 @@ const InsufficientFoundsModal: React.FC<Props> = ({ onClose, isOpen }) => {
       <ModalContent>
         <ModalCloseButton />
         <ModalBody>
-          <Text fontSize={"1.2rem"} fontWeight="bold" mb={6} mt={6}>
+          <Text color="blackAlpha.700" fontSize={"1.2rem"} fontWeight="bold" mb={6} mt={6}>
             Your Balance is insufficient
           </Text>
-          <Text>You can check your balance, try with other amount or cancel the operation</Text>
+          <Text color="blackAlpha.700">
+            You can check your balance, try with other amount or cancel the operation
+          </Text>
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter data-testid="insufficient-modal-footer">
           <HStack>
-            <Button colorScheme="orange" mr={3} onClick={onClose}>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme="orange" mr={3} onClick={handleRedirectBalance}>
+            <Button colorScheme="blue" mr={3} onClick={handleRedirectBalance}>
               Check Balance
             </Button>
-            <Button colorScheme="orange" mr={3} onClick={handleRedirectOther}>
+            <Button colorScheme="blue" mr={3} onClick={handleRedirectOther}>
               Other amount
             </Button>
           </HStack>

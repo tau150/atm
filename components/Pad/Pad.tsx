@@ -13,7 +13,7 @@ const Pad: React.FC<Props> = ({ onClickPadButton, enterButtonDisabled }: Props) 
       direction="column"
       p="4"
     >
-      <Stack>
+      <Stack data-testid="pad">
         <HStack>
           <Button colorScheme="gray" height="50px" w="80px" onClick={() => onClickPadButton("1")}>
             1

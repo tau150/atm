@@ -1,5 +1,5 @@
-import userEvent from "@testing-library/user-event";
 import { screen } from "@testing-library/dom";
+import userEvent from "@testing-library/user-event";
 
 import { AuthProvider } from "contexts/AuthContext";
 import { render } from "test-helpers/index";
