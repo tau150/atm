@@ -133,6 +133,7 @@ const Deposits: NextPage = () => {
                 Amount
               </Text>
               <Input
+                readOnly
                 color="whiteAlpha.900"
                 data-testid="input-100"
                 fontWeight="bold"
@@ -143,6 +144,7 @@ const Deposits: NextPage = () => {
                 onFocus={() => handleOnFocus("100")}
               />
               <Input
+                readOnly
                 alignItems="center"
                 color="whiteAlpha.900"
                 data-testid="input-200"
@@ -154,6 +156,7 @@ const Deposits: NextPage = () => {
                 onFocus={() => handleOnFocus("200")}
               />
               <Input
+                readOnly
                 color="whiteAlpha.900"
                 data-testid="input-500"
                 display="flex"
@@ -164,6 +167,7 @@ const Deposits: NextPage = () => {
                 onFocus={() => handleOnFocus("500")}
               />
               <Input
+                readOnly
                 alignItems="center"
                 color="whiteAlpha.900"
                 data-testid="input-1000"
