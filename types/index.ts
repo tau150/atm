@@ -31,7 +31,7 @@ export interface User {
   id: number;
   name: string;
   document: number;
-  password: number;
+  password?: number;
   balance: number;
   accountNumber: string;
   dateUpdated?: string;

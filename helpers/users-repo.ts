@@ -1,30 +1,34 @@
 import { User } from "types";
 
-const fs = require("fs");
+import { writeRegisters, getRegisters } from "./data-manager";
 
-const data = require("data/db.json");
-
-function saveData(user: User): void {
-  const restOfUsers = data.filter((dbUser: User) => dbUser.document !== user.document);
+async function saveData(user: User, registers: User[]) {
+  const restOfUsers = registers.filter((dbUser: User) => dbUser.document !== user.document);
   const newUsers = [...restOfUsers, user];
 
-  fs.writeFileSync("data/db.json", JSON.stringify(newUsers, null, 4));
+  writeRegisters(newUsers);
 }
 
-export function getByDocument(document: number): User {
-  return data.find((x: User) => x.document === document);
+export async function getByDocument(document: number): Promise<User | undefined> {
+  const result = await getRegisters();
+
+  return result.record.find((x: User) => x.document === document);
 }
 
-export function update(document: number, newBalance: number) {
-  const user = data.find((x: User): boolean => x.document === document);
+export async function update(document: number, newBalance: number) {
+  const registers = await getRegisters();
 
-  user.dateUpdated = new Date().toISOString();
-  user.balance = newBalance;
-  saveData(user);
+  const user = registers?.record.find((x: User): boolean => x.document === document);
+
+  if (user) {
+    user.dateUpdated = new Date().toISOString();
+    user.balance = newBalance;
+    saveData(user, registers.record);
+  }
 }
 
-export function getBalance(document: number): number {
-  const user = getByDocument(document);
+export async function getBalance(document: number): Promise<number | undefined> {
+  const user = await getByDocument(document);
 
-  return user.balance;
+  return user?.balance;
 }

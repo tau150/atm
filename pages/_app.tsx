@@ -11,7 +11,16 @@ import RouteProtection from "components/RouteGuard/RouteGuard";
 import { AuthProvider } from "contexts/AuthContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [queryClient] = useState(() => new QueryClient());
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            refetchOnWindowFocus: false,
+          },
+        },
+      }),
+  );
 
   return (
     <ChakraProvider theme={theme}>
