@@ -8,7 +8,6 @@ import { ResultStatus } from "types";
 export const useExtractMutation = (onNotEnoughBalance: Function) => {
   const toast = useToast();
   const router = useRouter();
-
   const { mutate } = useMutation(extract, {
     onSuccess: async (res, params) => {
       if (res.status === ResultStatus.NOT_ENOUGH_BALANCE) {

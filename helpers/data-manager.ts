@@ -26,11 +26,7 @@ export function writeRegisters(users: User[]): Promise<ApiResponse> {
         throw new Error();
       }
 
-      return res.json().map((user: User) => {
-        delete user.password;
-
-        return user;
-      });
+      return res.json();
     })
     .then((result: any) => {
       return result;
