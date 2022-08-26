@@ -12,18 +12,26 @@ async function saveData(user: User, registers: User[]) {
 export async function getByDocument(document: number): Promise<User | undefined> {
   const result = await getRegisters();
 
+  if (result instanceof Error) {
+    throw result;
+  }
+
   return result.record.find((x: User) => x.document === document);
 }
 
 export async function update(document: number, newBalance: number) {
-  const registers = await getRegisters();
+  const result = await getRegisters();
 
-  const user = registers?.record.find((x: User): boolean => x.document === document);
+  if (result instanceof Error) {
+    throw result;
+  }
+
+  const user = result?.record.find((x: User): boolean => x.document === document);
 
   if (user) {
     user.dateUpdated = new Date().toISOString();
     user.balance = newBalance;
-    saveData(user, registers.record);
+    saveData(user, result.record);
   }
 }
 

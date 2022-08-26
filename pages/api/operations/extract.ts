@@ -10,7 +10,7 @@ export default async function extractHandler(req: NextApiRequest, res: NextApiRe
 
   const result = await getBalance(Number(document));
 
-  if (!result) return res.status(500).end();
+  if (result === undefined) return res.status(500).end();
 
   try {
     if (result >= Number(amount)) {
@@ -31,6 +31,8 @@ export default async function extractHandler(req: NextApiRequest, res: NextApiRe
       });
     }
   } catch (e) {
+    console.log("%c [ e ]-34", "font-size:13px; background:pink; color:#bf2c9f;", e);
+
     return res.status(500).end();
   }
 }
