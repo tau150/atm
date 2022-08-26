@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import type { InputsState, InputKey } from "types/pages";
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast, Center } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { Heading, Text, Stack, Box, Input, Button } from "@chakra-ui/react";
@@ -25,7 +25,7 @@ const Deposits: NextPage = () => {
     "500": "0",
     "1000": "0",
   });
-
+  const queryClient = useQueryClient();
   const router = useRouter();
   const toast = useToast();
   const auth = useAuthUser();
@@ -33,6 +33,7 @@ const Deposits: NextPage = () => {
 
   const { mutate } = useMutation(deposit, {
     onSuccess: async (_, params) => {
+      queryClient.invalidateQueries();
       router.push({
         pathname: "/success",
         query: { operation: "deposit", amount: params.amount },

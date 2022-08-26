@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
@@ -8,6 +8,7 @@ import { ResultStatus } from "types";
 export const useExtractMutation = (onNotEnoughBalance: Function) => {
   const toast = useToast();
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { mutate } = useMutation(extract, {
     onSuccess: async (res, params) => {
       if (res.status === ResultStatus.NOT_ENOUGH_BALANCE) {
@@ -15,6 +16,8 @@ export const useExtractMutation = (onNotEnoughBalance: Function) => {
 
         return;
       }
+
+      queryClient.invalidateQueries();
 
       router.push({
         pathname: "/success",
